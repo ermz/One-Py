@@ -1,17 +1,19 @@
-calculation_to_units = 24
-name_of_unit = "hours"
-current_day = 35
-custom_message = "that is very cool"
-
-def days_to_units(days):
-    return f"{days} days are {days * calculation_to_units} {name_of_unit}"
 
 
-def validate_and_execute(number):
+def days_to_units(days, unit):
+    if unit == "hours":
+        return f"{days} days are {days * 24} {unit}"
+    elif unit == "minutes":
+        return f"{days} days are {days * 24 * 60} {unit}"
+    else:
+        return "unsupported units"
+
+
+def validate_and_execute(du_dic):
     try:
-        user_input_number = float(number)
+        user_input_number = float(du_dic["days"])
         if user_input_number > 0:
-            calculated_value = days_to_units(user_input_number)
+            calculated_value = days_to_units(user_input_number, du_dic["unit"])
             print(calculated_value)
         elif user_input_number == 0:
             print("you enter a 0 please enter a valid positive number")
@@ -23,12 +25,11 @@ def validate_and_execute(number):
 
 user_input = ""
 while user_input != "exit":
-    user_input = input("hey user, enter a number of days or list of days and I will cover it to hours \n")
-    print("hello")
-    if list(user_input):
-        for element in user_input.split():
-            validate_and_execute(element)
-    else:
-        validate_and_execute(user_input)
-
+    user_input = input("hey user, enter a number of days and conversion \n")
+    days_and_units = user_input.split(":")
+    print(days_and_units)
+    days_and_units_dic = {"days": days_and_units[0], "unit": days_and_units[1]}
+    print(days_and_units_dic)
+    validate_and_execute(days_and_units_dic)
+    # validate_and_execute(days_and_units_dic("days"))
 
